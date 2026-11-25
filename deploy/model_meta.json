@@ -1,0 +1,80 @@
+{
+  "created": "2026-11-17T06:33:02",
+  "selected_model": "combined_scale_translate_mosaic",
+  "source_checkpoint": "/content/drive/MyDrive/neu_det_yolov8n/runs/supervisor_experiments/combined_scale_translate_mosaic/weights/best.pt",
+  "classes": [
+    "crazing",
+    "inclusion",
+    "patches",
+    "pitted_surface",
+    "rolled-in_scale",
+    "scratches"
+  ],
+  "imgsz": 416,
+  "deploy_conf": 0.268,
+  "conf_f1_optimal": 0.268,
+  "conf_recall_priority": 0.2912912912912913,
+  "recall_target": 0.75,
+  "nms_iou": 0.5,
+  "ultralytics_version": "8.4.215",
+  "split": "train 85% / val 15%, seed 42 (no test split)",
+  "val_metrics": {
+    "mAP50": 0.8088,
+    "mAP50_95": 0.5087,
+    "precision_macro": 0.7377,
+    "recall_macro": 0.7634,
+    "f1_macro": 0.7351,
+    "conf": 0.268
+  },
+  "test_metrics": null,
+  "classwise_val": [
+    {
+      "class": "crazing",
+      "precision": 0.5993,
+      "recall": 0.2493,
+      "F1": 0.3521,
+      "AP50": 0.4278,
+      "AP50_95": 0.2039
+    },
+    {
+      "class": "inclusion",
+      "precision": 0.6471,
+      "recall": 0.8151,
+      "F1": 0.7214,
+      "AP50": 0.8229,
+      "AP50_95": 0.4813
+    },
+    {
+      "class": "patches",
+      "precision": 0.8499,
+      "recall": 0.9735,
+      "F1": 0.9075,
+      "AP50": 0.98,
+      "AP50_95": 0.7118
+    },
+    {
+      "class": "pitted_surface",
+      "precision": 0.8279,
+      "recall": 0.8326,
+      "F1": 0.8302,
+      "AP50": 0.8924,
+      "AP50_95": 0.5809
+    },
+    {
+      "class": "rolled-in_scale",
+      "precision": 0.6621,
+      "recall": 0.7611,
+      "F1": 0.7081,
+      "AP50": 0.7669,
+      "AP50_95": 0.4488
+    },
+    {
+      "class": "scratches",
+      "precision": 0.8398,
+      "recall": 0.949,
+      "F1": 0.8911,
+      "AP50": 0.9625,
+      "AP50_95": 0.6257
+    }
+  ]
+}

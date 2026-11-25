@@ -1,0 +1,11 @@
+image_id,source,crop_left,crop_top,crop_side,visual_review,status,retained_equivalent,reason
+00a,WhatsApp Image 2026-11-19 at 09.34.00.jpeg,35,65,365,Cutout and edge marks. No confident NEU-DET class assigned.,retained,,
+02a,WhatsApp Image 2026-11-19 at 09.34.02 (1).jpeg,35,65,365,Cutout and edge marks. Likely repeat view of 00a.,removed repeat view,00a,Repeated view of the same cutout and adjacent metal
+02b,WhatsApp Image 2026-11-19 at 09.34.02.jpeg,65,500,385,Small spots and reflections. Spots could be debris or surface marks.,retained,,
+03a,WhatsApp Image 2026-11-19 at 09.34.03.jpeg,65,500,385,Small spots and reflections. Likely repeat view of 02b.,removed repeat view,02b,Near-identical view of the same reflective area
+05a,WhatsApp Image 2026-11-19 at 09.34.05.jpeg,97,20,248,Machined part with faint linear marks. Review before labeling.,retained,,
+07a,WhatsApp Image 2026-11-19 at 09.34.07.jpeg,132,586,435,"Several scratch-like lines, with overlapping marks. Candidate for further annotation.",retained,,
+07b,WhatsApp Image 2026-11-19 at 09.34.07 (1).jpeg,50,476,455,"Clear long diagonal scratch, manually boxed from bright top tip through faint lower tail. Other visible marks remain unreviewed.",retained,,
+08a,WhatsApp Image 2026-11-19 at 09.34.08.jpeg,190,541,230,Machining and surface marks. No confident NEU-DET class assigned.,retained,,
+08b,WhatsApp Image 2026-11-19 at 09.34.08 (1).jpeg,80,22,240,Faint linear marks on machined part. Review before labeling.,removed repeat view,05a,Repeated upper-plate view of the same machining setup
+09a,WhatsApp Image 2026-11-19 at 09.34.09.jpeg,47,481,247,Cut edges and thin marks. Edge geometry and possible burrs left unclassified.,retained,,

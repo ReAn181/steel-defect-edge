@@ -1,0 +1,8 @@
+# Colab notebooks 00 and 01 install what they need themselves; this file is for reference.
+ultralytics>=8.3.0
+onnx
+onnxruntime
+onnxslim
+executorch
+torchao
+huggingface_hub

@@ -1,0 +1,1 @@
+Use jetson_200x200 for inference. Grayscale copies retain the original image size. Green boxes in annotated/ show a manually identified example and are intended for visual review. Labels are incomplete and should not be treated as a fully annotated test set. No model was run.

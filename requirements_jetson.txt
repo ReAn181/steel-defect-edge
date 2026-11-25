@@ -1,0 +1,10 @@
+# Vision + pipeline + tracker for the Jetson Orin Nano (JetPack 6.2.x, system Python 3.10).
+# NOT listed here, installed separately in notebook 02 section 3:
+#   - ONNX Runtime (GPU build from the Jetson AI Lab index, or the plain CPU wheel as a fallback)
+#   - OpenCV (cv2): check `python3 -c "import cv2"` first; if it fails, notebook 02 shows the pip command
+# numpy stays below 2 because the Jetson GPU wheels and OpenCV builds are made against numpy 1.x.
+numpy<2
+flask<3.1
+psutil
+matplotlib
+jupyterlab

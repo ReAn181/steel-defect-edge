@@ -1,0 +1,82 @@
+{
+  "version": "1.0",
+  "application": "hot-rolled steel strip surface inspection (NEU-DET classes)",
+  "coordinate_system": "x runs across the strip width (left to right), y runs along the rolling direction (top to bottom); both normalised 0-1; zones A1..C3 on a 3x3 grid",
+  "weights": {
+    "type": 0.5,
+    "size": 0.3,
+    "location": 0.2
+  },
+  "thresholds": {
+    "medium": 0.45,
+    "high": 0.65
+  },
+  "classes": {
+    "crazing": {
+      "type_score": 0.9,
+      "meaning": "network of fine surface cracks that can spread under forming"
+    },
+    "inclusion": {
+      "type_score": 0.8,
+      "meaning": "foreign material embedded in the surface layer"
+    },
+    "rolled-in_scale": {
+      "type_score": 0.6,
+      "meaning": "oxide scale pressed into the surface during rolling"
+    },
+    "pitted_surface": {
+      "type_score": 0.6,
+      "meaning": "small local pits where surface material is lost"
+    },
+    "scratches": {
+      "type_score": 0.4,
+      "meaning": "linear mechanical marks, usually cosmetic unless deep or long"
+    },
+    "patches": {
+      "type_score": 0.3,
+      "meaning": "irregular discoloured or uneven areas, mostly cosmetic"
+    }
+  },
+  "size_bands": [
+    [
+      0.02,
+      0.2
+    ],
+    [
+      0.08,
+      0.5
+    ],
+    [
+      0.2,
+      0.8
+    ],
+    [
+      1.01,
+      1.0
+    ]
+  ],
+  "zone_weights": [
+    [
+      1.0,
+      0.5,
+      1.0
+    ],
+    [
+      1.0,
+      0.5,
+      1.0
+    ],
+    [
+      1.0,
+      0.5,
+      1.0
+    ]
+  ],
+  "zone_overlap_min": 0.25,
+  "edge_margin": 0.05,
+  "count_escalation": {
+    "min_defects": 4,
+    "enabled": true
+  },
+  "advise_min_severity": "Low"
+}
