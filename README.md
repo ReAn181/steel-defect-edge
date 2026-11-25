@@ -69,23 +69,35 @@ The objective is to support industrial quality-control operators while reducing 
 
 ![System Architecture](images/system_architecture.png)
 ```mermaid
-flowchart TD
-    A[Steel Surface Image] --> B[Image Preprocessing]
-    B --> C[YOLOv8n ONNX Inference]
-    C --> D[Bounding Boxes and Defect Classes]
-    D --> E[Rule-Based Severity Assessment]
-    E --> F{Defect Detected?}
-    F -->|No| G[No Defect Detected]
-    F -->|Yes| H[Structured JSON Handoff]
-    H --> I[Llama 3.2 1B Instruct]
-    I --> J{Valid Advisory?}
-    J -->|Yes| K[Contextual Recommendation]
-    J -->|No| L[Template-Based Fallback]
-    G --> M[Inspection Records]
-    K --> M
-    L --> M
-    M --> N[Local Inspection Tracker]
-    M --> O[Annotated Images and Logs]
+## System Architecture and Processing Pipeline
+
+The EdgeSteel framework integrates computer vision, rule-based severity assessment, on-device language model inference, and local inspection tracking into a unified offline workflow.
+
+### Processing Stages
+
+1. **Image Acquisition and Preprocessing**  
+   Steel surface images are acquired and preprocessed to match the detector's input requirements.
+
+2. **Defect Detection and Localisation**  
+   YOLOv8n performs ONNX-based inference to identify defect classes, confidence scores, and bounding-box coordinates.
+
+3. **Rule-Based Severity Assessment**  
+   Detected defects are evaluated using their characteristics, spatial distribution, and frequency to assign an inspection priority of None, Low, Medium, or High.
+
+4. **Structured Information Handoff**  
+   When defects are detected, inspection information is converted into a structured JSON representation for contextual advisory generation.
+
+5. **On-Device Intelligent Advisory**  
+   Llama 3.2 1B Instruct, deployed through ExecuTorch with the XNNPACK CPU backend, generates contextual explanations and recommended inspection actions.
+
+6. **Template-Based Fallback**  
+   If the language model response is unavailable or unsuitable, deterministic templates provide predefined inspection recommendations.
+
+7. **Inspection Tracking and Logging**  
+   Detection results, severity classifications, recommendations, annotated images, and performance statistics are stored locally and displayed through the Steel Defect Tracker.
+
+The modular architecture separates high-throughput visual inspection from computationally intensive advisory generation, enabling offline operation on the NVIDIA Jetson Orin Nano.
+
 ```
 
 The architecture separates time-sensitive visual inspection from the computationally more expensive language-model advisory stage.
