@@ -1,4 +1,3 @@
-
 # EdgeSteel — Bharat AI SoC 2026–27
 
 ### ARM-Based Offline Steel Surface Defect Detection and Intelligent Inspection
@@ -8,6 +7,12 @@
 EdgeSteel is an offline, edge-deployed steel surface inspection and intelligent quality-control assistance system implemented on the NVIDIA Jetson Orin Nano platform.
 
 The system integrates a lightweight YOLOv8n object detector, rule-based defect severity assessment, an on-device quantized Llama 3.2 1B Instruct language model, and a local inspection tracker to provide defect localization, contextual explanations, and actionable operator recommendations without requiring cloud connectivity.
+
+## Performance Highlights
+
+| Detector validation mAP@50 | Mean vision throughput | Mean Llama decode throughput |
+|---:|---:|---:|
+| 80.88% | 37.12 FPS | 12.58 tokens/s |
 
 ---
 
@@ -62,6 +67,7 @@ The objective is to support industrial quality-control operators while reducing 
 
 ## 4. System Architecture
 
+![System Architecture](images/system_architecture.png)
 ```mermaid
 flowchart TD
     A[Steel Surface Image] --> B[Image Preprocessing]
@@ -105,7 +111,7 @@ The Northeastern University Surface Defect Detection dataset (NEU-DET) was used 
 | Initial Training Resolution | 416 × 416 pixels |
 
 ### 5.2 Defect Categories
-
+![Defect Classes](images/defect_classes.png)
 | Class | Description |
 |---|---|
 | Crazing | Fine, irregular surface crack patterns |
@@ -173,6 +179,10 @@ Initial baseline and hyperparameter-tuned experiments produced the following res
 
 The tuned model improved recall and mean average precision, although precision decreased relative to the initial baseline.
 
+![Training losses and validation mAP curves from model development](images/training_curves.png)
+
+*Training losses and validation mAP curves from model development.*
+
 ### 6.4 Data Augmentation Experiments
 
 Further experiments investigated individual and combined augmentation configurations.
@@ -189,6 +199,10 @@ The combined augmentation configuration achieved the highest reported mean avera
 
 Crazing and rolled-in scale remained challenging categories, indicating opportunities for further class-specific optimization.
 
+![Comparison of augmentation experiments](images/augmentation_results.png)
+
+*Comparison of augmentation experiments.*
+
 ### 6.5 Final Detector Validation
 
 The final deployment benchmark records the following detector validation metrics:
@@ -203,6 +217,22 @@ The final deployment benchmark records the following detector validation metrics
 | Deployment Confidence Threshold | 0.268 |
 
 These values represent detector validation performance recorded in the deployment benchmark. They do not represent independently measured accuracy on the Central Workshop photographs.
+
+![Recorded detector validation metrics](images/detector_metrics.png)
+
+*Recorded detector validation metrics.*
+
+![Normalized confusion matrix from model development](images/confusion_matrix.png)
+
+*Normalized confusion matrix from model development.*
+
+![Precision–recall curve](images/precision_recall_curve.png)
+
+*Precision–recall curve.*
+
+![Example validation predictions with bounding boxes](images/validation_predictions.jpg)
+
+*Example validation predictions with bounding boxes.*
 
 ---
 
@@ -290,6 +320,15 @@ All recommendations are intended to assist human operators rather than autonomou
 
 ## 9. Hardware Deployment
 
+<p align="center">
+  <img src="images/jetson_top.jpg" width="38%" alt="Jetson top view">
+  <img src="images/jetson_side.jpg" width="55%" alt="Jetson side view">
+</p>
+
+*Physical hardware setup used for deployment.*
+
+![Device Configuration](images/device_configuration.png)
+
 ### 9.1 Hardware and Software Configuration
 
 | Component | Specification |
@@ -353,6 +392,10 @@ The vision subsystem was benchmarked using 200 timed image inputs.
 
 Model inference represents the largest component of vision processing latency.
 
+![Measured vision throughput and stage-wise latency](images/vision_benchmark.png)
+
+*Measured vision throughput and stage-wise latency.*
+
 ### 10.3 Vision Power and Memory Consumption
 
 | Metric | Result |
@@ -368,6 +411,10 @@ Model inference represents the largest component of vision processing latency.
 Power and memory values were recorded using the available hardware-monitoring and process-level measurements.
 
 The active power measurement should not be interpreted as the configured 25 W power-mode limit.
+
+![Recorded vision-stage hardware resource measurements](images/hardware_benchmark.png)
+
+*Recorded vision-stage hardware resource measurements.*
 
 ### 10.4 Language Model Performance
 
@@ -390,6 +437,14 @@ The language-model benchmark consisted of eight advisory calls.
 | Peak Active Power | 8.346 W |
 
 The language-model stage is considerably slower than the vision subsystem. Consequently, the measured vision throughput should not be interpreted as the throughput of the complete vision-plus-advisory workflow.
+
+![Language-model benchmark results](images/llama_benchmark.png)
+
+*Language-model benchmark results.*
+
+![Language-model hardware measurements](images/llama_hardware.png)
+
+*Language-model hardware measurements.*
 
 ---
 
@@ -429,6 +484,10 @@ These results indicate potential suitability for the assumed inspection scenario
 
 The assessment is theoretical and does not constitute validation on an operational industrial conveyor. Camera acquisition, illumination, image overlap, communication delays, and production-line integration require further evaluation.
 
+![Theoretical throughput requirement compared with measured vision throughput](images/throughput_validation.png)
+
+*Theoretical throughput requirement compared with measured vision throughput.*
+
 ---
 
 ## 12. External Image Evaluation
@@ -436,6 +495,10 @@ The assessment is theoretical and does not constitute validation on an operation
 To investigate model behaviour beyond the primary dataset, steel surface photographs were collected by the project team at the Central Workshop, BITS Pilani Hyderabad Campus.
 
 The photographs were processed into image crops suitable for the deployed inspection pipeline.
+
+![Examples of workshop image inputs](images/external_raw_samples.png)
+
+*Examples of workshop image inputs.*
 
 The evaluation demonstrated:
 
@@ -451,6 +514,22 @@ The external photographs exhibit variations in illumination, surface texture, re
 This evaluation is exploratory and qualitative. The workshop photographs do not constitute an independently annotated and quantitatively validated external test set.
 
 A result of "no defect detected" does not establish that the photographed surface is defect-free.
+
+![Example workshop inspection outputs](images/external_detection_01.png)
+
+*Example workshop inspection outputs.*
+
+![Additional workshop inspection outputs](images/external_detection_02.png)
+
+*Additional workshop inspection outputs.*
+
+![Recorded workshop inspection run summary](images/external_run_summary.png)
+
+*Recorded workshop inspection run summary.*
+
+![Example operator advisory outputs](images/operator_advisory.png)
+
+*Example operator advisory outputs.*
 
 ---
 
@@ -481,6 +560,10 @@ The tracker consolidates information including:
 
 Inspection records are maintained locally to support traceability and subsequent review.
 
+![Local Steel Defect Tracker interface](images/inspection_tracker.png)
+
+*Local Steel Defect Tracker interface.*
+
 ---
 
 ## 14. Repository Structure
@@ -502,6 +585,9 @@ steel-defect-edge/
 │
 ├── external_dataset/
 │   └── Workshop photographs and preprocessing records
+│
+├── images/
+│   └── Documentation figures and benchmark screenshots
 │
 ├── llama_deploy/
 │   └── Language-model deployment asset location
@@ -668,9 +754,9 @@ The tracker displays the available inspection records and benchmark results.
 | External Image Evaluation | Central Workshop steel surface photographs |
 | Technical Report | Project methodology, results and limitations |
 
-**Technical Report:** To be linked.
+**Technical Report:** Pending final report upload to `docs/`.
 
-**Demonstration Video:** To be linked.
+**Demonstration Video:** [Watch the EdgeSteel Hardware Demonstration](https://drive.google.com/file/d/1SGTuEclwgrCgKY70NDF-6u-_Vp1Dp6LH/view?usp=sharing)
 
 ---
 
