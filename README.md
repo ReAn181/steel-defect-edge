@@ -68,43 +68,74 @@ The objective is to support industrial quality-control operators while reducing 
 ## 4. System Architecture
 
 ![System Architecture](images/system_architecture.png)
-```mermaid
-## System Architecture and Processing Pipeline
+## System Architecture
 
-The EdgeSteel framework integrates computer vision, rule-based severity assessment, on-device language model inference, and local inspection tracking into a unified offline workflow.
+EdgeSteel is a modular, offline industrial inspection framework that integrates computer vision, rule-based severity assessment, on-device language model inference, and local inspection tracking on the NVIDIA Jetson Orin Nano.
 
-### Processing Stages
+### End-to-End Processing Pipeline
 
-1. **Image Acquisition and Preprocessing**  
-   Steel surface images are acquired and preprocessed to match the detector's input requirements.
+1. **Image Acquisition and Preprocessing**
+   - Acquisition of steel surface images.
+   - Image resizing, normalisation, and preparation for model inference.
 
-2. **Defect Detection and Localisation**  
-   YOLOv8n performs ONNX-based inference to identify defect classes, confidence scores, and bounding-box coordinates.
+2. **Defect Detection and Localisation**
+   - YOLOv8n detector exported to ONNX.
+   - Inference through ONNX Runtime.
+   - Extraction of bounding-box coordinates, defect classes, and confidence scores.
+   - Confidence filtering and non-maximum suppression.
 
-3. **Rule-Based Severity Assessment**  
-   Detected defects are evaluated using their characteristics, spatial distribution, and frequency to assign an inspection priority of None, Low, Medium, or High.
+3. **Rule-Based Severity Assessment**
+   - Evaluation of defect characteristics, spatial distribution, and defect count.
+   - Classification into four inspection priority levels: None, Low, Medium, and High.
+   - Identification of the primary defect and associated inspection information.
 
-4. **Structured Information Handoff**  
-   When defects are detected, inspection information is converted into a structured JSON representation for contextual advisory generation.
+4. **Structured Information Handoff**
+   - Conversion of detection and severity results into structured JSON.
+   - Conditional invocation of the language model when defects are detected.
+   - Direct inspection logging when no defects are detected.
 
-5. **On-Device Intelligent Advisory**  
-   Llama 3.2 1B Instruct, deployed through ExecuTorch with the XNNPACK CPU backend, generates contextual explanations and recommended inspection actions.
+5. **On-Device Language Model Advisory**
+   - Llama 3.2 1B Instruct deployed through ExecuTorch.
+   - 8da4w quantisation with the XNNPACK CPU backend.
+   - Generation of contextual defect explanations and recommended inspection actions.
 
-6. **Template-Based Fallback**  
-   If the language model response is unavailable or unsuitable, deterministic templates provide predefined inspection recommendations.
+6. **Template-Based Fallback**
+   - Validation of generated advisory responses.
+   - Deterministic recommendations when language model output is unavailable or unsuitable.
+   - Continued advisory functionality without dependence on cloud services.
 
-7. **Inspection Tracking and Logging**  
-   Detection results, severity classifications, recommendations, annotated images, and performance statistics are stored locally and displayed through the Steel Defect Tracker.
+7. **Local Inspection Tracking and Logging**
+   - Storage of inspection records in structured JSON and JSONL formats.
+   - Visualisation of annotated images, defect categories, severity levels, and recommendations.
+   - Local Flask-based dashboard for inspection management and performance monitoring.
 
-The modular architecture separates high-throughput visual inspection from computationally intensive advisory generation, enabling offline operation on the NVIDIA Jetson Orin Nano.
+### System Components
 
-```
+| Component | Technology |
+|---|---|
+| Object Detection | YOLOv8n |
+| Detector Export Format | ONNX |
+| Vision Inference Runtime | ONNX Runtime |
+| Severity Assessment | Deterministic Rule-Based Algorithm |
+| Language Model | Llama 3.2 1B Instruct |
+| Language Model Runtime | ExecuTorch |
+| CPU Backend | XNNPACK |
+| Quantisation | 8da4w |
+| Edge Hardware | NVIDIA Jetson Orin Nano |
+| Inspection Dashboard | Flask |
+| Local Data Storage | JSON and JSONL |
 
-The architecture separates time-sensitive visual inspection from the computationally more expensive language-model advisory stage.
+### Architectural Design Considerations
 
-This separation allows the vision subsystem to achieve high processing throughput while generating contextual recommendations when required.
+- Lightweight object detection for high-throughput visual inspection.
+- Separation of vision inference and computationally intensive advisory generation.
+- Conditional language model execution to reduce unnecessary processing.
+- Deterministic fallback for improved operational reliability.
+- Modular implementation for maintainability and future optimisation.
+- Offline inference and local inspection record management.
 
----
+The architecture enables high-throughput visual defect detection alongside contextual inspection assistance without requiring cloud-based inference. The current implementation operates on stored steel surface images and provides a foundation for future integration with live industrial inspection systems.
+
 
 ## 5. Dataset
 
