@@ -756,7 +756,7 @@ The tracker displays the available inspection records and benchmark results.
 
 **Technical Report:** Pending final report upload to `docs/`.
 
-**Demonstration Video:** Pending final video URL.
+**Demonstration Video:** [Watch the EdgeSteel Hardware Demonstration](https://drive.google.com/file/d/1SGTuEclwgrCgKY70NDF-6u-_Vp1Dp6LH/view?usp=sharing)
 
 ---
 
