@@ -797,7 +797,8 @@ The tracker displays the available inspection records and benchmark results.
 | External Image Evaluation | Central Workshop steel surface photographs |
 | Technical Report | Project methodology, results and limitations |
 
-**Technical Report:** Pending final report upload to `docs/`.
+**Technical Report:** [Report_EdgeSteel](https://drive.google.com/file/d/1KINBAbLHzliHAi26lPrIhSVAfvZB_UgX/view?usp=sharing)
+
 
 **Demonstration Video:** [Watch the EdgeSteel Hardware Demonstration](https://drive.google.com/file/d/1SGTuEclwgrCgKY70NDF-6u-_Vp1Dp6LH/view?usp=sharing)
 
